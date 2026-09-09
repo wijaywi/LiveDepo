@@ -62,6 +62,7 @@ export default function LiveDepo() {
   const [customInput, setCustomInput] = useState('');
   
   const recognitionRef = useRef<any>(null);
+  const [micSupported, setMicSupported] = useState(false);
 
   useEffect(() => {
     // Load documents into Moss mock
@@ -71,26 +72,33 @@ export default function LiveDepo() {
     if (typeof window !== 'undefined') {
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       if (SpeechRecognition) {
-        recognitionRef.current = new SpeechRecognition();
-        recognitionRef.current.continuous = false;
-        recognitionRef.current.interimResults = false;
-        recognitionRef.current.lang = 'en-US';
+        try {
+          recognitionRef.current = new SpeechRecognition();
+          recognitionRef.current.continuous = false;
+          recognitionRef.current.interimResults = false;
+          recognitionRef.current.lang = 'en-US';
 
-        recognitionRef.current.onresult = (event: any) => {
-          const finalTranscript = event.results[0][0].transcript;
-          setTranscript(finalTranscript);
-          analyzeClaim(finalTranscript);
-          setIsListening(false);
-        };
+          recognitionRef.current.onresult = (event: any) => {
+            const finalTranscript = event.results[0][0].transcript;
+            setTranscript(finalTranscript);
+            analyzeClaim(finalTranscript);
+            setIsListening(false);
+          };
 
-        recognitionRef.current.onerror = (event: any) => {
-          console.error("Speech recognition error", event.error);
-          setIsListening(false);
-        };
-        
-        recognitionRef.current.onend = () => {
-          setIsListening(false);
-        };
+          recognitionRef.current.onerror = (event: any) => {
+            console.error("Speech recognition error", event.error);
+            setIsListening(false);
+          };
+          
+          recognitionRef.current.onend = () => {
+            setIsListening(false);
+          };
+          
+          setMicSupported(true);
+        } catch (e) {
+          console.error("Speech recognition initialization error", e);
+          setMicSupported(false);
+        }
       }
     }
   }, []);
@@ -167,7 +175,7 @@ export default function LiveDepo() {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold">Live Transcript</h2>
             
-            {recognitionRef.current ? (
+            {micSupported ? (
               <button 
                 onClick={toggleListening}
                 className={`px-4 py-2 rounded font-medium transition-colors ${
