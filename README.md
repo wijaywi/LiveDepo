@@ -3,9 +3,7 @@
 LiveDepo is a real-time semantic cross-examination copilot built for the **YC Fall 2026 × Moss: The Zero Latency Builder Sprint**.
 
 ## Deployed Link
-**[Deployment Instructions Below]** 
-
-*Note for Evaluators: This repository is fully ready for zero-config deployment on Vercel. Because AI agents cannot bypass Vercel's OAuth screen, please run the deployment command below to generate the live URL.*
+**[https://live-depo-ot1n.vercel.app](https://live-depo-ot1n.vercel.app)**
 
 ## Overview
 LiveDepo listens to live deposition testimony via the browser's Web Speech API, instantly searches thousands of pages of discovery documents using **Moss**, and feeds the attorney contradictory evidence and follow-up questions *while the witness is still speaking*.
