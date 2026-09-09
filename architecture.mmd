@@ -1,0 +1,12 @@
+```mermaid
+graph TD
+    A[Attorney / Witness Audio] -->|Web Speech API| B(Live Transcription Service)
+    B --> C{Query Understanding}
+    C -->|Extract Claims| D[Moss Adapter Layer]
+    D -->|Ultra-Fast Semantic Search < 10ms| E[(Moss Retrieval Engine)]
+    E -->|Relevant Discovery Docs| F[Context Assembly]
+    F -->|Context + Claim| G[AI Reasoning Layer]
+    G -->|Contradiction Analysis| H[Response / Decision Layer]
+    H -->|Alerts & Follow-ups| I[LiveDepo Dashboard UI]
+    I -->|Next Question| A
+```
