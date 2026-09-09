@@ -19,6 +19,8 @@ If Moss were removed and replaced with a standard vector database, retrieval wou
 3. Run `npm run dev`
 4. Open `http://localhost:3000`
 
+*Browser Compatibility Note: The live microphone feature uses `window.SpeechRecognition` which is natively supported on Chromium-based browsers (Chrome, Edge). On Safari/Firefox, the app will gracefully fall back to manual text input.*
+
 ## Deployment to Vercel (1-Minute Deploy)
 To generate the live Deployed Link required for submission:
 1. Ensure Vercel CLI is installed: `npm i -g vercel`

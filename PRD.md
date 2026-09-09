@@ -52,5 +52,5 @@ To verify functional correctness, the following test scenarios have been impleme
    - *Expected:* `window.SpeechRecognition` handles error gracefully. User can still type manually in the fallback input box.
 
 ## 6. Speed & Latency Justification
-**Without Moss:** Transcription (500ms) + Standard Vector DB Embedding & Network Latency (1500ms) + LLM Context Assembly (1000ms) = ~3000ms. In a deposition, a 3-second delay means the opportunity to object is lost.
-**With Moss:** Transcription (500ms) + Moss Search (measured ~8ms) + LLM (1000ms) = ~1508ms. This ~1.5s difference is the structural differentiator between a usable live tool and a post-deposition analyzer.
+**Without Moss:** Transcription (estimated 500ms) + Standard Vector DB Embedding & Network Latency (estimated 1500ms) + LLM Context Assembly (estimated 1000ms) = ~3000ms. In a deposition, a 3-second delay means the opportunity to object is lost.
+**With Moss:** Transcription (estimated 500ms) + Moss Search (measured ~8ms) + LLM (estimated 1000ms) = ~1508ms. This ~1.5s difference is the structural differentiator between a usable live tool and a post-deposition analyzer.
