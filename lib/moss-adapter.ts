@@ -30,9 +30,9 @@ function calculateSimilarity(queryTokens: string[], docTokens: string[]): number
   const docSet = new Set(docTokens);
   
   let intersection = 0;
-  for (const token of querySet) {
+  querySet.forEach((token) => {
     if (docSet.has(token)) intersection++;
-  }
+  });
   
   const union = querySet.size + docSet.size - intersection;
   return intersection / union;
