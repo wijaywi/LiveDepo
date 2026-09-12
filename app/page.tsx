@@ -74,15 +74,28 @@ export default function LiveDepo() {
       if (SpeechRecognition) {
         try {
           recognitionRef.current = new SpeechRecognition();
-          recognitionRef.current.continuous = false;
-          recognitionRef.current.interimResults = false;
+          recognitionRef.current.continuous = true; // Keep listening across short pauses
+          recognitionRef.current.interimResults = true; // Show words as they are spoken
           recognitionRef.current.lang = 'en-US';
 
+          let debounceTimer: ReturnType<typeof setTimeout>;
+
           recognitionRef.current.onresult = (event: any) => {
-            const finalTranscript = event.results[0][0].transcript;
-            setTranscript(finalTranscript);
-            analyzeClaim(finalTranscript);
-            setIsListening(false);
+            let currentTranscript = '';
+            for (let i = 0; i < event.results.length; i++) {
+              currentTranscript += event.results[i][0].transcript;
+            }
+            setTranscript(currentTranscript);
+
+            // Wait 2 seconds (longer pause) before analyzing and stopping
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+              if (currentTranscript.trim()) {
+                analyzeClaim(currentTranscript);
+                try { recognitionRef.current.stop(); } catch(e) {}
+                setIsListening(false);
+              }
+            }, 2000);
           };
 
           recognitionRef.current.onerror = (event: any) => {
